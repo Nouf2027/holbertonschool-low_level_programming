@@ -1,3 +1,8 @@
+/**
+ * times_table - prints the 9 times table, starting with 0
+ *
+ * Return: nothing
+ */
 #include "main.h"
 
 void times_table(void)
