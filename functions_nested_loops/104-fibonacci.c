@@ -30,7 +30,7 @@ carry=(a_low+b_low)/1000000000;
 b_low=(a_low+b_low)%1000000000;
 b_high=a_high+b_high+carry;
 printf(", %lu%09lu",b_high,b_low);
-a_high=b_high-a_high-carry+(a_low>b_low);
+a_high=b_high-(a_high+carry);
 a_low=b_low;
 }
 }
