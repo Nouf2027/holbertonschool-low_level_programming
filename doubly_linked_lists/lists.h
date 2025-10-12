@@ -42,5 +42,5 @@ dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index);
 
 /* 6-sum_dlistint.c */
 int sum_dlistint(dlistint_t *head);
-
+int delete_dnodeint_at_index(dlistint_t **head, unsigned int index);
 #endif /* LISTS_H */
