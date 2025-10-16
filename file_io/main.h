@@ -1,12 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "main.h"
+#ifndef MAIN_H
+#define MAIN_H
 
-int main(void)
-{
-ssize_t n;
+#include <stddef.h>
+#include <sys/types.h>
 
-n = read_textfile("Requiescat", 114);
-printf("\n(printed chars: %li)\n", n);
-return (0);
-}
+ssize_t read_textfile(const char *filename, size_t letters);
+
+#endif /* MAIN_H */
