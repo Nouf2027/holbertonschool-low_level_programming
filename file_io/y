@@ -1,0 +1,2 @@
+This project focuses on working with file descriptors and performing basic file operations in C, such as creating, opening, reading, writing, and closing files.
+It also explores file permissions, system calls, and the differences between system calls and library functions.x
