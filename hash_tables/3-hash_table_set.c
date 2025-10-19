@@ -1,59 +1,69 @@
 #include "hash_tables.h"
+#include <string.h>
+#include <stdlib.h>
 
 /**
- * hash_table_set - Insert or update a key/value in a hash table
- * @ht: pointer to the hash table
- * @key: key string (must not be empty)
- * @value: value string (duplicated internally)
- *
+ * make_node - Creates a new hash node
+ * @key: The key
+ * @value: The value
+ * Return: A pointer to the new node, or NULL on failure
+ */
+static hash_node_t *make_node(const char *key, const char *value)
+{
+hash_node_t *n = malloc(sizeof(*n));
+
+if (!n)
+return (NULL);
+
+n->key = strdup(key);
+n->value = strdup(value ? value : "");
+
+if (!n->key || !n->value)
+{
+free(n->key);
+free(n->value);
+free(n);
+return (NULL);
+}
+
+n->next = NULL;
+return (n);
+}
+
+/**
+ * hash_table_set - Adds or updates an element in the hash table
+ * @ht: The hash table
+ * @key: The key
+ * @value: The value
  * Return: 1 on success, 0 on failure
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
-unsigned long int index;
+unsigned long int i;
 hash_node_t *node, *cur;
-char *value_copy;
+char *cpy;
 
-if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
+if (!ht || !key || !*key || !value || !ht->array)
 return (0);
 
-index = key_index((const unsigned char *)key, ht->size);
+i = key_index((const unsigned char *)key, ht->size);
 
-for (cur = ht->array[index]; cur != NULL; cur = cur->next)
-{
+for (cur = ht->array[i]; cur; cur = cur->next)
 if (strcmp(cur->key, key) == 0)
 {
-value_copy = strdup(value);
-if (value_copy == NULL)
+cpy = strdup(value);
+if (!cpy)
 return (0);
 free(cur->value);
-cur->value = value_copy;
-return (1);
-}
-}
-
-node = malloc(sizeof(hash_node_t));
-if (node == NULL)
-return (0);
-
-node->key = strdup(key);
-if (node->key == NULL)
-{
-free(node);
-return (0);
-}
-
-node->value = strdup(value);
-if (node->value == NULL)
-{
-free(node->key);
-free(node);
-return (0);
-}
-
-node->next = ht->array[index];
-ht->array[index] = node;
-
+cur->value = cpy;
 return (1);
 }
 
+node = make_node(key, value);
+if (!node)
+return (0);
+
+node->next = ht->array[i];
+ht->array[i] = node;
+return (1);
+}
