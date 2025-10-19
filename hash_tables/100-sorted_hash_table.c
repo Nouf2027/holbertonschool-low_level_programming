@@ -28,3 +28,35 @@ ht->stail = NULL;
 
 return (ht);
 }
+/**
+ * struct shash_node_s - Node of a sorted hash table
+ * @key: The key, string
+ * @value: The value corresponding to a key
+ * @next: Pointer to the next node (same index)
+ * @sprev: Pointer to the previous node in the sorted linked list
+ * @snext: Pointer to the next node in the sorted linked list
+ */
+typedef struct shash_node_s
+{
+char *key;
+char *value;
+struct shash_node_s *next;
+struct shash_node_s *sprev;
+struct shash_node_s *snext;
+} shash_node_t;
+
+/**
+ * struct shash_table_s - Sorted hash table data structure
+ * @size: The size of the array
+ * @array: An array of size @size
+ * @shead: A pointer to the first element of the sorted linked list
+ * @stail: A pointer to the last element of the sorted linked list
+ */
+typedef struct shash_table_s
+{
+unsigned long int size;
+shash_node_t **array;
+shash_node_t *shead;
+shash_node_t *stail;
+} shash_table_t;
+#endif
