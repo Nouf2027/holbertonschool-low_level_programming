@@ -2,7 +2,7 @@
 #define HASH_TABLES_H
 /**
  * hash_table_create - Creates a hash table
- * @size: Size of the array
+ * size: Size of the array
  *
  * Return: Pointer to the newly created hash table, or NULL if it fails
  */
@@ -14,9 +14,9 @@
 
 /**
  * struct hash_node_s - Node of a hash table
- * @key: The key (string)
- * @value: The value corresponding to a key
- * @next: A pointer to the next node in the list
+ * key: The key (string)
+ * value: The value corresponding to a key
+ * next: A pointer to the next node in the list
  */
 typedef struct hash_node_s
 {
@@ -27,8 +27,8 @@ struct hash_node_s *next;
 
 /**
  * struct hash_table_s - Hash table data structure
- * @size: The size of the array
- * @array: An array of size @size
+ * size: The size of the array
+ * array: An array of size @size
  */
 typedef struct hash_table_s
 {
