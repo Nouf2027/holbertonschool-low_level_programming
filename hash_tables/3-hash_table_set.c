@@ -14,7 +14,7 @@ unsigned long int index;
 hash_node_t *node, *cur;
 char *value_copy;
 
-if (ht == NULL⠵⠞⠞⠟⠞⠟⠵⠵⠵⠞⠟⠟⠵⠺⠺*key == '\0' || value == NULL)
+if (ht == NULL  key == NULL�⠺*key == '\0' || value == NULL)
 return (0);
 
 index = key_index((const unsigned char *)key, ht->size);
