@@ -2,14 +2,12 @@
 #define HASH_TABLES_H
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 /**
  * struct hash_node_s - Node of a hash table
- * key:The key (string), unique in the hash table
- * value: The value associated with the key
- * next: Points to the next node in the list
+ * @key:  Key string (must be unique in the table)
+ * @value: Value string associated with @key
+ * @next: Pointer to the next node (for chaining collisions)
  */
 typedef struct hash_node_s
 {
@@ -20,8 +18,10 @@ struct hash_node_s *next;
 
 /**
  * struct hash_table_s - Hash table data structure
- * size: The size of the array
- * array: The array of pointers to nodes
+ * @size:  Number of slots in @array
+ * @array: Array of pointers to the first node of each chain
+ *
+ * Each cell in @array points to the head of a linked list (chaining).
  */
 typedef struct hash_table_s
 {
@@ -29,12 +29,7 @@ unsigned long int size;
 hash_node_t **array;
 } hash_table_t;
 
-/**
- * hash_table_create - Creates a hash table
- * size: The size of the array
- *
- * Return: Pointer to the newly created hash table, or NULL on failure
- */
+/* Prototypes */
 hash_table_t *hash_table_create(unsigned long int size);
 
 #endif /* HASH_TABLES_H */
