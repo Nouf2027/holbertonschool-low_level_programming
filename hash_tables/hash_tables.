@@ -1,0 +1,37 @@
+#ifndef HASH_TABLES_H
+#define HASH_TABLES_H
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+/**
+ * struct hash_node_s - Node of a hash table
+ * Description: Represents a key-value pair in the hash table
+ */
+typedef struct hash_node_s
+{
+char *key;              /* The key (string) */
+char *value;            /* The value corresponding to the key */
+struct hash_node_s *next; /* Pointer to the next node */
+} hash_node_t;
+
+/**
+ * struct hash_table_s - Hash table data structure
+ * Description: Contains the array and its size
+ */
+typedef struct hash_table_s
+{
+unsigned long int size;  /* The size of the array */
+hash_node_t **array;     /* The array of pointers to nodes */
+} hash_table_t;
+
+/**
+ * hash_table_create - Creates a hash table
+ * @size: The size of the array
+ *
+ * Return: Pointer to the newly created hash table, or NULL on failure
+ */
+hash_table_t *hash_table_create(unsigned long int size);
+
+#endif /* HASH_TABLES_H */
