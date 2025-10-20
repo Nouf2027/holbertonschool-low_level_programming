@@ -2,32 +2,85 @@
 #include "hash_tables.h"
 
 /**
- * shash_table_create - Creates a sorted hash table
- * @size: size of the array
+ * shash_table_set - adds or updates an element in the sorted hash table
+ * @ht: pointer to the sorted hash table
+ * @key: key string (cannot be empty)
+ * @value: value string (must be duplicated)
  *
- * Return: pointer to new table, or NULL on failure
+ * Return: 1 if success, 0 otherwise
  */
-shash_table_t *shash_table_create(unsigned long int size)
+int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 {
-shash_table_t *ht;
+unsigned long int index;
+shash_node_t *node, *tmp;
+char *val_copy;
 
-if (size == 0)
-return (NULL);
+if (!ht || !key || !*key || !value)
+return (0);
 
-ht = malloc(sizeof(shash_table_t));
-if (ht == NULL)
-return (NULL);
+val_copy = strdup(value);
+if (!val_copy)
+return (0);
 
-ht->size = size;
-ht->array = calloc(size, sizeof(shash_node_t *));
-if (ht->array == NULL)
+index = key_index((const unsigned char *)key, ht->size);
+tmp = ht->array[index];
+
+while (tmp)
 {
-free(ht);
-return (NULL);
+if (strcmp(tmp->key, key) == 0)
+{
+free(tmp->value);
+tmp->value = val_copy;
+return (1);
+}
+tmp = tmp->next;
 }
 
-ht->shead = NULL;
-ht->stail = NULL;
-return (ht);
+node = malloc(sizeof(shash_node_t));
+if (!node)
+{
+free(val_copy);
+return (0);
 }
 
+node->key = strdup(key);
+node->value = val_copy;
+node->next = ht->array[index];
+ht->array[index] = node;
+
+node->snext = NULL;
+node->sprev = NULL;
+
+if (!ht->shead)
+{
+ht->shead = node;
+ht->stail = node;
+}
+else
+{
+tmp = ht->shead;
+while (tmp && strcmp(key, tmp->key) > 0)
+tmp = tmp->snext;
+
+if (!tmp)
+{
+node->sprev = ht->stail;
+ht->stail->snext = node;
+ht->stail = node;
+}
+else if (tmp == ht->shead)
+{
+node->snext = tmp;
+tmp->sprev = node;
+ht->shead = node;
+}
+else
+{
+node->sprev = tmp->sprev;
+node->snext = tmp;
+tmp->sprev->snext = node;
+tmp->sprev = node;
+}
+}
+return (1);
+}
