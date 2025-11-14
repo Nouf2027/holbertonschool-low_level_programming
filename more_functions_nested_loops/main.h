@@ -13,6 +13,7 @@ void print_diagonal(int n);
 void print_square(int size);
 int _putchar(char c);
 int main(void);
+void print_triangle(int size);
 
 
 
