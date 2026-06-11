@@ -1,18 +1,18 @@
-#include "3-calc.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "3-calc.h"
 
 /**
- * main - performs simple arithmetic operations
- * @argc: argument count
- * @argv: argument vector
+ * main - entry point of the program
+ * @argc: number of arguments
+ * @argv: array of arguments
  *
- * Return: 0 on success, exits with error codes otherwise
+ * Return: 0 on success, exits with error code otherwise
  */
 int main(int argc, char *argv[])
 {
 	int a, b, result;
-	int (*op)(int, int);
+	int (*op_func)(int, int);
 
 	if (argc != 4)
 	{
@@ -20,15 +20,16 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	op = get_op_func(argv[2]);
-	if (op == NULL)
+	a = atoi(argv[1]);
+	b = atoi(argv[3]);
+
+	op_func = get_op_func(argv[2]);
+
+	if (!op_func)
 	{
 		printf("Error\n");
 		exit(99);
 	}
-
-	a = atoi(argv[1]);
-	b = atoi(argv[3]);
 
 	if ((argv[2][0] == '/' || argv[2][0] == '%') && b == 0)
 	{
@@ -36,7 +37,8 @@ int main(int argc, char *argv[])
 		exit(100);
 	}
 
-	result = op(a, b);
+	result = op_func(a, b);
 	printf("%d\n", result);
+
 	return (0);
 }
